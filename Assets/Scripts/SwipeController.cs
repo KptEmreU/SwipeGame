@@ -7,7 +7,19 @@ public class SwipeController : MonoBehaviour {
     Vector2 startTouchPos;
     Vector2 movingTouchPos;
     float touchDistance = 0;
-    
+
+    private void OnEnable()
+    {
+        EEvents.OnCardFall += Reset;
+    }
+
+    private void OnDisable()
+    {
+        EEvents.OnCardFall -= Reset;
+    }
+
+
+
     void Update()
     {
 #if UNITY_ANDROID
@@ -46,7 +58,8 @@ public class SwipeController : MonoBehaviour {
         }
         if (Input.GetMouseButton(0))
         {
-            movingTouchPos = Input.mousePosition;
+            if(startTouchPos != Vector2.zero) //this is required to not fall the cards after reset
+                movingTouchPos = Input.mousePosition;
         }
 
         CalculateTouchDistance();
@@ -58,8 +71,10 @@ public class SwipeController : MonoBehaviour {
 
     private void Reset()
     {
+        Debug.Log("ResetCome");
         movingTouchPos = startTouchPos = Vector2.zero;
         touchDistance = 0;
+        Debug.Log(movingTouchPos + " " + startTouchPos + " " + touchDistance);
     }
 
     void CalculateTouchDistance()

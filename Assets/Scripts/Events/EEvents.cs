@@ -14,6 +14,17 @@ public static class EEvents
             OnXChange(x);
         }
     }
-    
+
+    public delegate void OnCardFallDelegate();
+    public static event OnCardFallDelegate OnCardFall;
+
+    public static void OnCardFallingNow()
+    {
+        if (OnCardFall != null)
+        {
+            OnCardFall();
+        }
+    }
+
 
 }

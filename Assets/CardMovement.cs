@@ -76,8 +76,9 @@ public class CardMovement : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, fallPositionTarget, Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 180), 0.1f);
         }
-
         ResetTheCard();
+        EEvents.OnCardFallingNow(); // this is important to reset the swipe, voice, effects, points etc - DOES NOT KNOW THE CARD THOUGH
+                                    // card data should be some other class
     }
 
     void ResetTheCard()
